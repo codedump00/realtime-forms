@@ -10,5 +10,5 @@ export const onJoin = (socket: Socket, io: Server) => {
 
     socket.join(opportunityId);
 
-    io.to(opportunityId).emit(events.JOIN, user)
+    socket.broadcast.to(opportunityId).emit(events.JOIN, user);
 }
