@@ -8,7 +8,8 @@ export class ActiveList {
     }
 
     set putUser(user: any) {
-        this.users.push(user);
+        if (!this.users.some(u => u === user))
+            this.users.push(user);
     }
 
     get getUsers() {
