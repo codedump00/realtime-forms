@@ -1,102 +1,52 @@
-export class ActiveList {
-    private opportunityId: string;
-    private users: any[] = [];
-
-    constructor(opportunityId: string, users: any[]) {
-        this.opportunityId = opportunityId;
-        this.users = users;
-    }
-
-    set putUser(user: any) {
-        if (!this.users.some(u => u === user))
-            this.users.push(user);
-    }
-
-    get getUsers() {
-        return this.users;
-    }
-
-    set setOpportunityId(opportunityId: string) {
-        this.opportunityId = opportunityId;
-    }
-
-    get getOpportunityId() {
-        return this.opportunityId;
-    }
-
-    get isEmpty() {
-        return this.users.length === 0;
-    }
-
-    indexOfUser(user: any) {
-        return this.users.findIndex(item => item === user);
-    }
-
-    removeUser(user: any) {
-        const indexOfUser = this.indexOfUser(user);
-
-        if (indexOfUser > -1) {
-            this.users.splice(indexOfUser, 1);
-        }
-    }
-}
+import { ActiveUsers } from "../data/user.data";
 
 class OpportunitiesRepository {
-    private activeList: ActiveList[];
+    private active: ActiveUsers[];
 
     constructor() {
-        this.activeList = [];
+        this.active = [];
+    }
+
+    set opportunities(newOpportunity: ActiveUsers) {
+        const indexOfOpportunity = this.active.findIndex(
+            item => item.opportunityId === newOpportunity.opportunityId
+        );
+        if (indexOfOpportunity < 0) {
+            this.active.push(newOpportunity);
+        } else {
+            this.active[indexOfOpportunity].users = newOpportunity.users[0];
+        }
     }
 
     hasOpportunity(opportunityId: string) {
-        return this.activeList.some(items => items.getOpportunityId === opportunityId);
-    }
-
-    set addOpportunity(newOpportunity: ActiveList) {
-        const indexOfOpportunity = this.activeList.findIndex(
-            item => item.getOpportunityId === newOpportunity.getOpportunityId
-        );
-        if (indexOfOpportunity < 0) {
-            this.activeList.push(newOpportunity);
-        } else {
-            this.activeList[indexOfOpportunity].putUser = newOpportunity.getUsers[0];
-        }
+        return this.active.some(items => items.opportunityId === opportunityId);
     }
 
     removeOpportunity(opportunityId: string) {
-        const indexToRemove = this.activeList.findIndex(
-            item => item.getOpportunityId === opportunityId
+        const indexToRemove = this.active.findIndex(
+            item => item.opportunityId === opportunityId
         );
 
         if (indexToRemove > -1) {
-            this.activeList.splice(indexToRemove, 1)
+            this.active.splice(indexToRemove, 1)
         }
     }
 
     getUsersOfOpportunity(opportunityId: string) {
-        const activeItem = this.activeList.find(list => list.getOpportunityId === opportunityId);
+        const activeItem = this.active.find(list => list.opportunityId === opportunityId);
 
-        if (activeItem) return activeItem.getUsers;
+        if (activeItem) return activeItem.users;
 
         return [];
     }
 
     removeUserOfOpportunity(opportunityId: string, user: any) {
-        const indexOfOpportunity = this.activeList.findIndex(
-            item => item.getOpportunityId === opportunityId
+        const indexOfOpportunity = this.active.findIndex(
+            item => item.opportunityId === opportunityId
         );
 
         if (indexOfOpportunity > -1) {
-            this.activeList[indexOfOpportunity].removeUser(user);
-            // if (this.activeList[indexOfOpportunity].isEmpty) {
-            //     this.activeList.splice(indexOfOpportunity, 1);
-            // } else {
-            //     const indexOfUser = this.activeList[indexOfOpportunity].indexOfUser(user);
-
-            //     if(indexOfUser > -1) {
-            //         this.activeList[indexOfOpportunity].
-            //     }
-            // }
+            this.active[indexOfOpportunity].removeUser(user);
         }
     }
 }
