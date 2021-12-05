@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Ashish Kafle<blazinasis@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
     "start": "node ./src/index.ts"
