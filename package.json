@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
-    "start": "ts-node ./src/index.ts"
+    "start": "node ./src/index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
