@@ -6,9 +6,9 @@ const configs: TConfig = {
   local: {
     port: process.env.PORT ?? 8000,
   },
-  dev: {},
-  uat: {},
-  prod: {}
+  dev: {port: process.env.PORT ?? 8001,},
+  uat: {port: process.env.PORT ?? 8002,},
+  prod: {port: process.env.PORT ?? 8003,}
 };
 
 
